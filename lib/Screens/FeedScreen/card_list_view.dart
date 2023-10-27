@@ -51,12 +51,6 @@ class CardListView extends StatelessWidget {
               width: width,
               imageUrl: "assets/images/amrita.png",
             ),
-            SizedBox(height: height * 0.02),
-            FeedCard(
-              height: height,
-              width: width,
-              imageUrl: "assets/images/amrita.png",
-            ),
           ],
         ),
       ),

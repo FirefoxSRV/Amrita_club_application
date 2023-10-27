@@ -16,7 +16,7 @@ class FeedCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        print(imageUrl);
+
       },
       child: Container(
           decoration: BoxDecoration(color: Colors.white, border: Border.all(color: Colors.blueGrey), borderRadius: BorderRadius.circular(30)),
