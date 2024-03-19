@@ -1,15 +1,16 @@
 import 'package:club_application/Screens/FeedScreen/Filter/scrollable_filter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../utils/constants.dart';
+import 'Filter/filter_chip.dart';
 import 'card_list_view.dart';
 import 'feed_card.dart';
 
 enum Windows { news, clubs }
-
 class FeedScreen extends StatefulWidget {
   const FeedScreen({super.key});
 
@@ -25,37 +26,59 @@ class _FeedScreenState extends State<FeedScreen> {
     return LayoutBuilder(builder: (context, constraints) {
       var height = constraints.maxHeight;
       var width = constraints.maxWidth;
-      return Scaffold(
-        backgroundColor: Color(0xFF657e7a),
-        appBar: buildAppBar(),
-        body: AnimatedSwitcher(
-          switchInCurve: Curves.linearToEaseOut,
-          switchOutCurve: Curves.decelerate,
-          reverseDuration: Duration(milliseconds: 700),
-          duration: Duration(milliseconds: 700),
-          child: _windows == Windows.news
-              ? Center(
-                  child: Column(
-                    children: [
-                      ScrollableFilter(height: height,width: width,),
-                      CardListView(width: width, height: height)
-                    ],
-                  ),
-                )
-              : Text("Yeee"),
+      return Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.center,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.white,
+              Color(0xFFffd7e3),
+              Color(0xFFffd7e3),
+              Color(0xFFea99a2),
+              Color(0xFFea99a2),
+            ]
+          )
         ),
-        bottomNavigationBar: BottomAppBar(
-          elevation: 0,
-          color: kBackgroundColor,
-          shape: const CircularNotchedRectangle(),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                buildBottomNews(),
-                buildBottomClubs(),
-              ],
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: buildAppBar(),
+          body: AnimatedSwitcher(
+            switchInCurve: Curves.linearToEaseOut,
+            switchOutCurve: Curves.decelerate,
+            reverseDuration: Duration(milliseconds: 700),
+            duration: Duration(milliseconds: 700),
+            child: _windows == Windows.news
+                ? Center(
+                    child: Column(
+                      children: [
+                        CardListView(width: width, height: height)
+                      ],
+                    ),
+                  )
+                : Text("Yeee"),
+          ),
+          bottomNavigationBar: BottomAppBar(
+            height: MediaQuery.of(context).size.height*0.1,
+            elevation: 0,
+            color: Colors.transparent,
+            shape: const CircularNotchedRectangle(),
+            child: Container(
+
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20)
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    buildBottomNews(),
+                    buildBottomClubs(),
+                  ],
+                ),
+              ),
             ),
           ),
         ),
@@ -78,10 +101,30 @@ class _FeedScreenState extends State<FeedScreen> {
       actions: [
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Icon(
-            Icons.filter_alt_outlined,
+          child: IconButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return Dialog(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Wrap(
+                        children: [
+                          Center(child: Text("Filters",style: GoogleFonts.quicksand(fontSize:24),),),
+                          Center(child: FilterChipDemo()),
+                        ],
+                      ),
+                    ), // Your FilterChipDemo widget
+                  );
+                },
+              );
+            },
+            icon:Icon(Icons.filter_alt_outlined, size: 30,),
             color: kappBarContentColor,
-            size: 30,
           ),
         ),
         Padding(
@@ -97,6 +140,8 @@ class _FeedScreenState extends State<FeedScreen> {
   }
 
   Column buildBottomClubs() {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -105,7 +150,8 @@ class _FeedScreenState extends State<FeedScreen> {
             borderRadius: BorderRadius.circular(30.0),
             color: _windows == Windows.clubs ? kIconColor : kBackgroundColor,
           ),
-          height: 33.0,
+          width: width*0.195,
+          height: height*0.05,
           duration: const Duration(milliseconds: 250),
           child: MaterialButton(
             onPressed: () {
@@ -120,15 +166,13 @@ class _FeedScreenState extends State<FeedScreen> {
             ),
           ),
         ),
-        Text(
-          "Clubs",
-          style: GoogleFonts.quicksand(fontSize: 16.0),
-        )
       ],
     );
   }
 
   Column buildBottomNews() {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -139,8 +183,8 @@ class _FeedScreenState extends State<FeedScreen> {
             color: _windows == Windows.news ? kIconColor : kBackgroundColor,
           ),
           duration: const Duration(milliseconds: 250),
-          width: 80.0,
-          height: 33.0,
+          width: width*0.195,
+          height: height*0.05,
           child: IconButton(
             onPressed: () {
               setState(() {
@@ -148,15 +192,11 @@ class _FeedScreenState extends State<FeedScreen> {
               });
             },
             splashRadius: 10.0,
-            icon: const Icon(FontAwesomeIcons.newspaper, size: 20),
+            icon: Icon(FontAwesomeIcons.newspaper),
             color: _windows == Windows.news ? kBackgroundColor : kIconColor,
             splashColor: Colors.black38,
           ),
         ),
-        Text(
-          "News",
-          style: GoogleFonts.quicksand(fontSize: 16.0),
-        )
       ],
     );
   }
