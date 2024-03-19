@@ -1,3 +1,4 @@
+import 'package:club_application/Screens/CalendarScreen/calendar_screen.dart';
 import 'package:club_application/Screens/FeedScreen/Filter/scrollable_filter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -162,7 +163,9 @@ class _FeedScreenState extends State<FeedScreen> {
           padding: const EdgeInsets.all(8.0),
           child: IconButton(
             onPressed: (){
-
+              Navigator.push(context, MaterialPageRoute(builder: (context){
+                return CalendarScreen();
+              }));
             },
             icon:Icon(Icons.calendar_month,size: 30,),
             color: Colors.black,

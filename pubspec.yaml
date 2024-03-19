@@ -39,6 +39,7 @@ dependencies:
   font_awesome_flutter: ^10.6.0
   animations: ^2.0.8
   animated_text_kit: ^4.2.2
+  table_calendar: ^3.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
