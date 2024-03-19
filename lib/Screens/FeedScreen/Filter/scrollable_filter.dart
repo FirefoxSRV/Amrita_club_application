@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> b7e1966 (Changes made)
 class ScrollableFilter extends StatefulWidget {
   ScrollableFilter({
     super.key,

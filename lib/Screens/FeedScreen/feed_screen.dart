@@ -79,7 +79,7 @@ class _FeedScreenState extends State<FeedScreen> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Icon(
-            Icons.notifications,
+            Icons.filter_alt_outlined,
             color: kappBarContentColor,
             size: 30,
           ),

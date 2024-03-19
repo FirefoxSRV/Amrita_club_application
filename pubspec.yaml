@@ -38,6 +38,10 @@ dependencies:
   google_fonts: ^6.1.0
   font_awesome_flutter: ^10.6.0
   animations: ^2.0.8
+<<<<<<< HEAD
+=======
+  animated_text_kit: ^4.2.2
+>>>>>>> b7e1966 (Changes made)
 
 dev_dependencies:
   flutter_test:
