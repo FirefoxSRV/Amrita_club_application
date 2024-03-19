@@ -6,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../utils/constants.dart';
+import '../ClubScreen/search_page.dart';
 import 'Filter/filter_chip.dart';
 import 'card_list_view.dart';
 import 'feed_card.dart';
@@ -20,6 +21,25 @@ class FeedScreen extends StatefulWidget {
 
 class _FeedScreenState extends State<FeedScreen> {
   Windows _windows = Windows.news;
+  bool isGDSC = false;
+  bool isIETE = false;
+  bool isElite = false;
+  bool isASCII = false;
+  bool isIDEA = false;
+  bool isIntelIOT = false;
+
+  void _updateFilterStates(bool isGDSC, bool isIETE,
+      bool isElite, bool isASCII, bool isIDEA, bool isIntelIOT) {
+      setState(() {
+          isGDSC = isGDSC;
+          isIETE = isIETE;
+          isElite = isElite;
+          isASCII = isASCII;
+          isIDEA = isIDEA;
+          isIntelIOT = isIntelIOT;
+          // _handleFilters();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,61 +63,71 @@ class _FeedScreenState extends State<FeedScreen> {
         child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: buildAppBar(),
-          body: AnimatedSwitcher(
-            switchInCurve: Curves.linearToEaseOut,
-            switchOutCurve: Curves.decelerate,
-            reverseDuration: Duration(milliseconds: 700),
-            duration: Duration(milliseconds: 700),
-            child: _windows == Windows.news
-                ? Center(
-                    child: Column(
-                      children: [
-                        CardListView(width: width, height: height)
-                      ],
-                    ),
-                  )
-                : Text("Yeee"),
-          ),
-          bottomNavigationBar: BottomAppBar(
-            height: MediaQuery.of(context).size.height*0.1,
-            elevation: 0,
-            color: Colors.transparent,
-            shape: const CircularNotchedRectangle(),
-            child: Container(
-
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20)
+          body: Stack(
+            children: [
+              AnimatedSwitcher(
+                switchInCurve: Curves.linearToEaseOut,
+                switchOutCurve: Curves.decelerate,
+                reverseDuration: Duration(milliseconds: 700),
+                duration: Duration(milliseconds: 700),
+                child: _windows == Windows.news
+                    ? Center(
+                        child: Column(
+                          children: [
+                            CardListView(width: width, height: height)
+                          ],
+                        ),
+                      )
+                    : SearchPage()
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    buildBottomNews(),
-                    buildBottomClubs(),
-                  ],
-                ),
-              ),
-            ),
+              Positioned(left: 10,bottom: 10,right: 10,child: buildBottomNavigationBar())
+            ],
           ),
         ),
       );
     });
   }
+  Widget buildBottomNavigationBar() {
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.1,
+      width: MediaQuery.of(context).size.width * 0.9,
+      decoration: BoxDecoration(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              buildBottomNews(),
+              buildBottomClubs(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
 
   AppBar buildAppBar() {
     return AppBar(
+      elevation: 0,
       leading: Icon(
         Icons.list_sharp,
-        color: kappBarContentColor,
+        color: Colors.black87,
         size: 30,
       ),
       title: Text(
         'Amrita Club Hub',
-        style: TextStyle(color: kappBarContentColor, fontWeight: FontWeight.w800, fontSize: 20),
+        style: TextStyle(color: Colors.black, fontWeight: FontWeight.w800, fontSize: 20),
       ),
-      backgroundColor: kappBarColor,
+      backgroundColor: Colors.white,
       actions: [
         Padding(
           padding: const EdgeInsets.all(8.0),
@@ -108,14 +138,15 @@ class _FeedScreenState extends State<FeedScreen> {
                 builder: (BuildContext context) {
                   return Dialog(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)
+                      borderRadius: BorderRadius.circular(20)
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.only(left: 8.0,right: 8.0,top: 50,bottom: 50),
                       child: Wrap(
                         children: [
-                          Center(child: Text("Filters",style: GoogleFonts.quicksand(fontSize:24),),),
-                          Center(child: FilterChipDemo()),
+                          Center(child: Text("Filters",style: GoogleFonts.quicksand(fontSize:32),),),
+                          SizedBox(height: MediaQuery.of(context).size.height*0.07,),
+                          Center(child: FilterChipDemo(isASCII: isASCII,isElite: isElite,isGDSC: isGDSC,isIDEA: isIDEA,isIETE: isIETE,isIntelIOT: isIntelIOT,onUpdateFilterStates: _updateFilterStates,)),
                         ],
                       ),
                     ), // Your FilterChipDemo widget
@@ -123,16 +154,19 @@ class _FeedScreenState extends State<FeedScreen> {
                 },
               );
             },
-            icon:Icon(Icons.filter_alt_outlined, size: 30,),
+            icon:Icon(Icons.filter_alt_outlined, size: 30,color: Colors.black,),
             color: kappBarContentColor,
           ),
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Icon(
-            Icons.calendar_month,
-            color: kappBarContentColor,
-            size: 30,
+          child: IconButton(
+            onPressed: (){
+
+            },
+            icon:Icon(Icons.calendar_month,size: 30,),
+            color: Colors.black,
+
           ),
         ),
       ],

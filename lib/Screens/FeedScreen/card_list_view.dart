@@ -1,6 +1,4 @@
-
 import 'package:flutter/cupertino.dart';
-
 import 'feed_card.dart';
 
 class CardListView extends StatelessWidget {
