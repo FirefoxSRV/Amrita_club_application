@@ -107,47 +107,60 @@ class _CalendarScreenState extends State<CalendarScreen> {
             ),
           ],
         ),
-        bottomNavigationBar: BottomSheet(
-          backgroundColor: kappBarColor,
-          onClosing: () {  },
-          builder: (BuildContext context) {
-            return SizedBox(
+        bottomSheet: DraggableScrollableSheet(
+          expand: false,
+          initialChildSize: 0.4, // Initial size of the bottom sheet when built
+          minChildSize: 0.4, // Minimum size of the bottom sheet (collapsed state)
+          maxChildSize: 1, // Maximum size of the bottom sheet when expanded
+          builder: (BuildContext context,ScrollController scrollController) {
+            return Container(
+              decoration: BoxDecoration(
+                color: kappBarColor,
+                borderRadius: BorderRadius.only(topRight: Radius.circular(20),topLeft: Radius.circular(20))
+              ),
               width: MediaQuery.of(context).size.width * 0.98,
-              height: MediaQuery.of(context).size.height * 0.4,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: MediaQuery.of(context).size.height*0.05,),
-                  Padding(
-                    padding:EdgeInsets.only(left: MediaQuery.of(context).size.width*0.03),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: Colors.black),
-                        color: Colors.white,
+              child: ListView.builder(
+                shrinkWrap: true,
+                controller: scrollController,
+                itemCount: 2,
+                itemBuilder: (BuildContext context, int index) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: MediaQuery.of(context).size.height*0.05,),
+                      Padding(
+                        padding:EdgeInsets.only(left: MediaQuery.of(context).size.width*0.03),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(color: Colors.black),
+                            color: Colors.white,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text("Events for "+ formatEventDate(today.toString().split(' ')[0]),style: GoogleFonts.quicksand(color:Colors.black,fontSize:20),),
+                          ),
+                        ),
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text("Events for "+ formatEventDate(today.toString().split(' ')[0]),style: GoogleFonts.quicksand(color:Colors.black,fontSize:20),),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 10,),
-                  Padding(
-                    padding:EdgeInsets.only(left: MediaQuery.of(context).size.width*0.03,right:MediaQuery.of(context).size.width*0.03 ),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: Colors.black),
-                        color: Colors.white,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text("Switch to weekly view button. Switch to week view. Displays your activities that are scheduled for the selected week. You can designate a 5 Day Weekly format .Switch to weekly view button. Switch to week view. Displays your activities that are scheduled for the selected week. You can designate a 5 Day Weekly format .Switch to weekly view button. Switch to week view. Displays your activities that are scheduled for the selected week. You can designate a 5 Day Weekly format .",style: GoogleFonts.quicksand(color:Colors.black,fontSize:20),),
-                      ),
-                    ),
-                  )
-                ],
+                      SizedBox(height: 10,),
+                      Padding(
+                        padding:EdgeInsets.only(left: MediaQuery.of(context).size.width*0.03,right:MediaQuery.of(context).size.width*0.03 ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(color: Colors.black),
+                            color: Colors.white,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text("Switch to weekly view button. Switch to week view. Displays your activities that are scheduled for the selected week. You can designate a 5 Day Weekly format .Switch to weekly view button. Switch to week view. Displays your activities that are scheduled for the selected week. You can designate a 5 Day Weekly format .Switch to weekly view button. Switch to week view. Displays your activities that are scheduled for the selected week. You can designate a 5 Day Weekly format .",style: GoogleFonts.quicksand(color:Colors.black,fontSize:20),),
+                          ),
+                        ),
+                      )
+                    ],
+                  );
+                },
+
               ),
             );
           },
