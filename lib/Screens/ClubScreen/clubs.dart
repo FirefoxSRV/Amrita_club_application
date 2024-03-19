@@ -1,42 +1,42 @@
 List<Map<String,dynamic>> clubs = [
   {
-    'clubName':'Idea',
+    'clubName':'iDea',
     'clubImage':'https://media.istockphoto.com/id/960813498/vector/light-bulb-idea-lamp-outline-icon-vector.jpg?s=612x612&w=0&k=20&c=jISHQ-lwMpWw7PC56Pll4XFjXrwAvKXCAnYPYMHutJg='
-},
+  },
   {
     'clubName':'IETE',
     'clubImage':'https://media.istockphoto.com/id/960813498/vector/light-bulb-idea-lamp-outline-icon-vector.jpg?s=612x612&w=0&k=20&c=jISHQ-lwMpWw7PC56Pll4XFjXrwAvKXCAnYPYMHutJg='
-},
+  },
   {
     'clubName':'GDSC',
     'clubImage':'https://media.istockphoto.com/id/960813498/vector/light-bulb-idea-lamp-outline-icon-vector.jpg?s=612x612&w=0&k=20&c=jISHQ-lwMpWw7PC56Pll4XFjXrwAvKXCAnYPYMHutJg='
-},
+  },
   {
     'clubName':'ASDS',
     'clubImage':'https://media.istockphoto.com/id/960813498/vector/light-bulb-idea-lamp-outline-icon-vector.jpg?s=612x612&w=0&k=20&c=jISHQ-lwMpWw7PC56Pll4XFjXrwAvKXCAnYPYMHutJg='
-},
+  },
   {
     'clubName':'SAE',
     'clubImage':'https://media.istockphoto.com/id/960813498/vector/light-bulb-idea-lamp-outline-icon-vector.jpg?s=612x612&w=0&k=20&c=jISHQ-lwMpWw7PC56Pll4XFjXrwAvKXCAnYPYMHutJg='
-},
+  },
   {
     'clubName':'ACE',
     'clubImage':'https://media.istockphoto.com/id/960813498/vector/light-bulb-idea-lamp-outline-icon-vector.jpg?s=612x612&w=0&k=20&c=jISHQ-lwMpWw7PC56Pll4XFjXrwAvKXCAnYPYMHutJg='
-},
+  },
   {
     'clubName':'Elite',
     'clubImage':'https://media.istockphoto.com/id/960813498/vector/light-bulb-idea-lamp-outline-icon-vector.jpg?s=612x612&w=0&k=20&c=jISHQ-lwMpWw7PC56Pll4XFjXrwAvKXCAnYPYMHutJg='
-},
+  },
   {
     'clubName':'A-MUNSO',
     'clubImage':'https://media.istockphoto.com/id/960813498/vector/light-bulb-idea-lamp-outline-icon-vector.jpg?s=612x612&w=0&k=20&c=jISHQ-lwMpWw7PC56Pll4XFjXrwAvKXCAnYPYMHutJg='
-},
+  },
   {
     'clubName':'Toast Masters',
     'clubImage':'https://media.istockphoto.com/id/960813498/vector/light-bulb-idea-lamp-outline-icon-vector.jpg?s=612x612&w=0&k=20&c=jISHQ-lwMpWw7PC56Pll4XFjXrwAvKXCAnYPYMHutJg='
-},
+  },
   {
     'clubName':'Rando',
     'clubImage':'https://media.istockphoto.com/id/960813498/vector/light-bulb-idea-lamp-outline-icon-vector.jpg?s=612x612&w=0&k=20&c=jISHQ-lwMpWw7PC56Pll4XFjXrwAvKXCAnYPYMHutJg='
-},
+  },
 ];

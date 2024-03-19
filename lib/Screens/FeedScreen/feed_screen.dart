@@ -21,6 +21,10 @@ class FeedScreen extends StatefulWidget {
 }
 
 class _FeedScreenState extends State<FeedScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+
+
   Windows _windows = Windows.news;
   bool isGDSC = false;
   bool isIETE = false;
@@ -62,6 +66,37 @@ class _FeedScreenState extends State<FeedScreen> {
           )
         ),
         child: Scaffold(
+          drawer: Drawer(
+            surfaceTintColor: Colors.amberAccent,
+            backgroundColor: kBackgroundColor,
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: <Widget>[
+                UserAccountsDrawerHeader(
+                  decoration: BoxDecoration(
+                    color: kappBarColor
+                  ),
+                  accountName: Text("Shreyas Visweshwaran",style: GoogleFonts.quicksand(color:Colors.black87,fontWeight:FontWeight.w600),),
+                  accountEmail: Text("shreyasvisweshwaran@gmail.com",style: GoogleFonts.quicksand(color:Colors.black87,fontWeight:FontWeight.w400),),
+                  currentAccountPicture: CircleAvatar(
+                    backgroundColor: Colors.white,
+                    child: Text(
+                      "S",
+                      style: TextStyle(fontSize: 40.0),
+                    ),
+                  ),
+                ),
+                ListTile(
+                  leading: Icon(Icons.person),
+                  title: Text('Profile'),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
+          ),
+          key: _scaffoldKey,
           backgroundColor: Colors.transparent,
           appBar: buildAppBar(),
           body: Stack(
@@ -119,10 +154,12 @@ class _FeedScreenState extends State<FeedScreen> {
   AppBar buildAppBar() {
     return AppBar(
       elevation: 0,
-      leading: Icon(
-        Icons.list_sharp,
+      leading: IconButton(
+        onPressed: (){
+          _scaffoldKey.currentState?.openDrawer();
+        },
+        icon : Icon(Icons.list_sharp,size: 30,),
         color: Colors.black87,
-        size: 30,
       ),
       title: Text(
         'Amrita Club Hub',
