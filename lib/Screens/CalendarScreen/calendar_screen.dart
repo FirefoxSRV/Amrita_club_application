@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import '../../Models/event.dart';
+
 class CalendarScreen extends StatefulWidget {
   const CalendarScreen({super.key});
   @override
@@ -12,11 +14,14 @@ class CalendarScreen extends StatefulWidget {
 
 class _CalendarScreenState extends State<CalendarScreen> {
   DateTime today = DateTime.now();
+  List<Event> selectedDayEvents = [];
+
 
   void _onDaySelected(DateTime day, DateTime focusedDay){
     setState(() {
       today = day;
     });
+    _fetchEventsForDay(day);
   }
 
   String getOrdinal(int number) {
@@ -34,6 +39,32 @@ class _CalendarScreenState extends State<CalendarScreen> {
         return '${number}th';
     }
   }
+  void _fetchEventsForDay(DateTime day) async {
+    var eventsForTheDay = await getEventsForDate(day); // This is a placeholder
+    setState(() {
+      selectedDayEvents = eventsForTheDay;
+    });
+  }
+
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchEventsForDay(today);
+  }
+
+
+  Future<List<Event>> getEventsForDate(DateTime date) async {
+    List<Event> allEvents = [
+      Event(title: "Event 1", description: "Description of Event 1", date: DateTime.now()),
+      Event(title: "Event 2", description: "Description of Event 2", date: DateTime(2024, 3, 26)),
+      Event(title: "Event 3", description: "Description of Event 3", date: DateTime(2024, 3, 27)),
+    ];
+    return allEvents.where((event) => isSameDay(event.date, date)).toList();
+  }
+
+
+
 
   String formatEventDate(String dateStr) {
     print(dateStr);
@@ -109,9 +140,9 @@ class _CalendarScreenState extends State<CalendarScreen> {
         ),
         bottomSheet: DraggableScrollableSheet(
           expand: false,
-          initialChildSize: 0.4, // Initial size of the bottom sheet when built
-          minChildSize: 0.4, // Minimum size of the bottom sheet (collapsed state)
-          maxChildSize: 1, // Maximum size of the bottom sheet when expanded
+          initialChildSize: 0.4, 
+          minChildSize: 0.4,
+          maxChildSize: 1,
           builder: (BuildContext context,ScrollController scrollController) {
             return Container(
               decoration: BoxDecoration(
@@ -122,46 +153,100 @@ class _CalendarScreenState extends State<CalendarScreen> {
               child: ListView.builder(
                 shrinkWrap: true,
                 controller: scrollController,
-                itemCount: 2,
+                itemCount: selectedDayEvents.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: MediaQuery.of(context).size.height*0.05,),
-                      Padding(
-                        padding:EdgeInsets.only(left: MediaQuery.of(context).size.width*0.03),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(color: Colors.black),
-                            color: Colors.white,
+                  Event event = selectedDayEvents[index];
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: MediaQuery.of(context).size.height*0.05,),
+                          Padding(
+                            padding:EdgeInsets.only(left: MediaQuery.of(context).size.width*0.03),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(color: Colors.black),
+                                color: Colors.white,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text("Events for "+ formatEventDate(event.date.toString()),style: GoogleFonts.quicksand(color:Colors.black,fontSize:20),),
+                              ),
+                            ),
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text("Events for "+ formatEventDate(today.toString().split(' ')[0]),style: GoogleFonts.quicksand(color:Colors.black,fontSize:20),),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 10,),
-                      Padding(
-                        padding:EdgeInsets.only(left: MediaQuery.of(context).size.width*0.03,right:MediaQuery.of(context).size.width*0.03 ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(color: Colors.black),
-                            color: Colors.white,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text("Switch to weekly view button. Switch to week view. Displays your activities that are scheduled for the selected week. You can designate a 5 Day Weekly format .Switch to weekly view button. Switch to week view. Displays your activities that are scheduled for the selected week. You can designate a 5 Day Weekly format .Switch to weekly view button. Switch to week view. Displays your activities that are scheduled for the selected week. You can designate a 5 Day Weekly format .",style: GoogleFonts.quicksand(color:Colors.black,fontSize:20),),
-                          ),
-                        ),
-                      )
-                    ],
-                  );
+                          SizedBox(height: 10,),
+                          Padding(
+                            padding:EdgeInsets.only(left: MediaQuery.of(context).size.width*0.03,right:MediaQuery.of(context).size.width*0.03 ),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(color: Colors.black),
+                                color: Colors.white,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Center(child: Text(event.title,style: GoogleFonts.quicksand(color:Colors.black,fontSize:20),)),
+                                    Text(event.description,style: GoogleFonts.quicksand(color:Colors.black,fontSize:20),),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      );
+                  // return ListTile(
+                  //   title: Text(event.title, style: GoogleFonts.quicksand(color: Colors.black, fontSize: 20)),
+                  //   subtitle: Text("${event.description} - ${DateFormat('yyyy-MM-dd').format(event.date)}", style: GoogleFonts.quicksand(color: Colors.grey, fontSize: 16)),
+                  // );
                 },
-
               ),
+              // child: ListView.builder(
+              //   shrinkWrap: true,
+              //   controller: scrollController,
+              //   itemCount: 2,
+              //   itemBuilder: (BuildContext context, int index) {
+              //     return Column(
+              //       crossAxisAlignment: CrossAxisAlignment.start,
+              //       children: [
+              //         SizedBox(height: MediaQuery.of(context).size.height*0.05,),
+              //         Padding(
+              //           padding:EdgeInsets.only(left: MediaQuery.of(context).size.width*0.03),
+              //           child: Container(
+              //             decoration: BoxDecoration(
+              //               borderRadius: BorderRadius.circular(20),
+              //               border: Border.all(color: Colors.black),
+              //               color: Colors.white,
+              //             ),
+              //             child: Padding(
+              //               padding: const EdgeInsets.all(8.0),
+              //               child: Text("Events for "+ formatEventDate(today.toString().split(' ')[0]),style: GoogleFonts.quicksand(color:Colors.black,fontSize:20),),
+              //             ),
+              //           ),
+              //         ),
+              //         SizedBox(height: 10,),
+              //         Padding(
+              //           padding:EdgeInsets.only(left: MediaQuery.of(context).size.width*0.03,right:MediaQuery.of(context).size.width*0.03 ),
+              //           child: Container(
+              //             decoration: BoxDecoration(
+              //               borderRadius: BorderRadius.circular(20),
+              //               border: Border.all(color: Colors.black),
+              //               color: Colors.white,
+              //             ),
+              //             child: Padding(
+              //               padding: const EdgeInsets.all(8.0),
+              //               child: Text("Switch to weekly view button. Switch to week view. Displays your activities that are scheduled for the selected week. You can designate a 5 Day Weekly format .Switch to weekly view button. Switch to week view. Displays your activities that are scheduled for the selected week. You can designate a 5 Day Weekly format .Switch to weekly view button. Switch to week view. Displays your activities that are scheduled for the selected week. You can designate a 5 Day Weekly format .",style: GoogleFonts.quicksand(color:Colors.black,fontSize:20),),
+              //             ),
+              //           ),
+              //         )
+              //       ],
+              //     );
+              //   },
+              //
+              // ),
             );
           },
 
