@@ -11,7 +11,6 @@ class CalendarScreen extends StatefulWidget {
 }
 
 class _CalendarScreenState extends State<CalendarScreen> {
-
   DateTime today = DateTime.now();
 
   void _onDaySelected(DateTime day, DateTime focusedDay){
@@ -37,6 +36,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
   }
 
   String formatEventDate(String dateStr) {
+    print(dateStr);
     DateTime date = DateTime.parse(dateStr);
     String monthYear = DateFormat('MMMM yyyy').format(date);
     String ordinalDay = getOrdinal(date.day);
