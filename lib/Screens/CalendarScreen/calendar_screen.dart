@@ -140,22 +140,24 @@ class _CalendarScreenState extends State<CalendarScreen> {
         ),
         bottomSheet: DraggableScrollableSheet(
           expand: false,
-          initialChildSize: 0.4, 
+          initialChildSize: 0.4,
           minChildSize: 0.4,
           maxChildSize: 1,
-          builder: (BuildContext context,ScrollController scrollController) {
+          builder: (BuildContext context, ScrollController scrollController) {
+            // This boolean will dynamically check if there are events for 'today'
+            bool hasEventsForSelectedDay = selectedDayEvents.isNotEmpty;
+
             return Container(
               decoration: BoxDecoration(
-                color: kappBarColor,
-                borderRadius: BorderRadius.only(topRight: Radius.circular(20),topLeft: Radius.circular(20))
+                  color: kappBarColor,
+                  borderRadius: BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20))
               ),
-              width: MediaQuery.of(context).size.width * 0.98,
-              child: ListView.builder(
-                shrinkWrap: true,
+              child: ListView(
                 controller: scrollController,
-                itemCount: selectedDayEvents.length,
-                itemBuilder: (BuildContext context, int index) {
-                  Event event = selectedDayEvents[index];
+                children: [
+                  if (hasEventsForSelectedDay)
+                    ...selectedDayEvents.map((event) {
+                      // Map your events to widgets as needed
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -198,59 +200,29 @@ class _CalendarScreenState extends State<CalendarScreen> {
                           )
                         ],
                       );
-                  // return ListTile(
-                  //   title: Text(event.title, style: GoogleFonts.quicksand(color: Colors.black, fontSize: 20)),
-                  //   subtitle: Text("${event.description} - ${DateFormat('yyyy-MM-dd').format(event.date)}", style: GoogleFonts.quicksand(color: Colors.grey, fontSize: 16)),
-                  // );
-                },
+                    }).toList()
+                  else
+                  // Display a message if there are no events for the selected day
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(color: Colors.white,width: 2)
+                        ),
+                        child: Text(
+                          "No events available for this date.",
+                          style: GoogleFonts.quicksand(color: Colors.white, fontSize: 20),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                ],
               ),
-              // child: ListView.builder(
-              //   shrinkWrap: true,
-              //   controller: scrollController,
-              //   itemCount: 2,
-              //   itemBuilder: (BuildContext context, int index) {
-              //     return Column(
-              //       crossAxisAlignment: CrossAxisAlignment.start,
-              //       children: [
-              //         SizedBox(height: MediaQuery.of(context).size.height*0.05,),
-              //         Padding(
-              //           padding:EdgeInsets.only(left: MediaQuery.of(context).size.width*0.03),
-              //           child: Container(
-              //             decoration: BoxDecoration(
-              //               borderRadius: BorderRadius.circular(20),
-              //               border: Border.all(color: Colors.black),
-              //               color: Colors.white,
-              //             ),
-              //             child: Padding(
-              //               padding: const EdgeInsets.all(8.0),
-              //               child: Text("Events for "+ formatEventDate(today.toString().split(' ')[0]),style: GoogleFonts.quicksand(color:Colors.black,fontSize:20),),
-              //             ),
-              //           ),
-              //         ),
-              //         SizedBox(height: 10,),
-              //         Padding(
-              //           padding:EdgeInsets.only(left: MediaQuery.of(context).size.width*0.03,right:MediaQuery.of(context).size.width*0.03 ),
-              //           child: Container(
-              //             decoration: BoxDecoration(
-              //               borderRadius: BorderRadius.circular(20),
-              //               border: Border.all(color: Colors.black),
-              //               color: Colors.white,
-              //             ),
-              //             child: Padding(
-              //               padding: const EdgeInsets.all(8.0),
-              //               child: Text("Switch to weekly view button. Switch to week view. Displays your activities that are scheduled for the selected week. You can designate a 5 Day Weekly format .Switch to weekly view button. Switch to week view. Displays your activities that are scheduled for the selected week. You can designate a 5 Day Weekly format .Switch to weekly view button. Switch to week view. Displays your activities that are scheduled for the selected week. You can designate a 5 Day Weekly format .",style: GoogleFonts.quicksand(color:Colors.black,fontSize:20),),
-              //             ),
-              //           ),
-              //         )
-              //       ],
-              //     );
-              //   },
-              //
-              // ),
             );
           },
-
         ),
+
       ),
     );
   }
