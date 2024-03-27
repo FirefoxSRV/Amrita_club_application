@@ -1,5 +1,6 @@
-import 'package:club_application/Screens/ClubScreen/Clubmainpage/principal_page.dart';
-import 'package:club_application/Screens/ClubScreen/clubs.dart';
+import 'package:club_application/Screens/ClubScreen/Clubmainpage/club_page.dart';
+import 'package:club_application/Data/clubs.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SearchPage extends StatefulWidget {
@@ -52,8 +53,13 @@ class _SearchPageState extends State<SearchPage> {
 
   Widget listTile(int index) {
     final club = foundClubs[index];
-    return Container(
-      margin: EdgeInsets.only(bottom: 15, left: 10, right: 10),
+    return MaterialButton(
+      onPressed: (){
+        Navigator.push(context, CupertinoPageRoute(builder: (context){
+          return ClubPage(clubImage: club['clubImage'],clubName: club['clubName'],);
+        }));
+      },
+      padding: EdgeInsets.only(bottom: 15, left: 10, right: 10),
       child: ListTile(
         leading: CircleAvatar(
           radius: 30,

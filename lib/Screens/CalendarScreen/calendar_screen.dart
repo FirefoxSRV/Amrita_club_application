@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import '../../Models/data.dart';
+import '../../Data/data.dart';
 import '../../Models/event.dart';
 
 class CalendarScreen extends StatefulWidget {
@@ -56,7 +56,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
 
   Future<List<Event>> getEventsForDate(DateTime date) async {
-
     return allEvents.where((event) => isSameDay(event.date, date)).toList();
   }
 

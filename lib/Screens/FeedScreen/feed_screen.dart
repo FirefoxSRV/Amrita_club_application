@@ -7,7 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../utils/constants.dart';
-import '../ClubScreen/search_page.dart';
+import '../ClubScreen/club_search_page.dart';
 import 'Filter/filter_chip.dart';
 import 'card_list_view.dart';
 import 'feed_card.dart';

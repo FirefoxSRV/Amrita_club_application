@@ -1,6 +1,6 @@
 
 
-import 'event.dart';
+import '../Models/event.dart';
 
 List<Event> allEvents = [
   Event(title: "Event 1", description: "Description of Event 1", date: DateTime.now()),
