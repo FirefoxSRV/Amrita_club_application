@@ -1,5 +1,4 @@
 import 'package:club_application/Screens/CalendarScreen/calendar_screen.dart';
-import 'package:club_application/Screens/FeedScreen/Filter/scrollable_filter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -10,8 +9,6 @@ import '../../utils/constants.dart';
 import '../ClubScreen/club_search_page.dart';
 import 'Filter/filter_chip.dart';
 import 'card_list_view.dart';
-import 'feed_card.dart';
-
 enum Windows { news, clubs }
 class FeedScreen extends StatefulWidget {
   const FeedScreen({super.key});
