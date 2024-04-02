@@ -25,7 +25,7 @@ class _ClubPageState extends State<ClubPage> {
           height: MediaQuery.of(context).size.height*0.7,
           width: double.infinity,
           alignment: Alignment.center,
-          child: Text('Permanent Bottom Sheet'),
+          child: const Text('Permanent Bottom Sheet'),
         );
       }),
       body: Container(

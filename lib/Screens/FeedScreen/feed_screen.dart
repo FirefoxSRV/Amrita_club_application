@@ -49,7 +49,7 @@ class _FeedScreenState extends State<FeedScreen> {
       var height = constraints.maxHeight;
       var width = constraints.maxWidth;
       return Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.center,
             end: Alignment.bottomCenter,
@@ -75,7 +75,7 @@ class _FeedScreenState extends State<FeedScreen> {
                   ),
                   accountName: Text("Shreyas Visweshwaran",style: GoogleFonts.quicksand(color:Colors.black87,fontWeight:FontWeight.w600),),
                   accountEmail: Text("shreyasvisweshwaran@gmail.com",style: GoogleFonts.quicksand(color:Colors.black87,fontWeight:FontWeight.w400),),
-                  currentAccountPicture: CircleAvatar(
+                  currentAccountPicture: const CircleAvatar(
                     backgroundColor: Colors.white,
                     child: Text(
                       "S",
@@ -158,7 +158,7 @@ class _FeedScreenState extends State<FeedScreen> {
         icon : Icon(Icons.list_sharp,size: 30,),
         color: Colors.black87,
       ),
-      title: Text(
+      title: const Text(
         'Amrita Club Hub',
         style: TextStyle(color: Colors.black, fontWeight: FontWeight.w800, fontSize: 20),
       ),
@@ -198,10 +198,10 @@ class _FeedScreenState extends State<FeedScreen> {
           child: IconButton(
             onPressed: (){
               Navigator.push(context, MaterialPageRoute(builder: (context){
-                return CalendarScreen();
+                return const CalendarScreen();
               }));
             },
-            icon:Icon(Icons.calendar_month,size: 30,),
+            icon:const Icon(Icons.calendar_month,size: 30,),
             color: Colors.black,
 
           ),

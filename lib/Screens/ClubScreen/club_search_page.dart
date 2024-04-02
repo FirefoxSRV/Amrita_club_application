@@ -42,7 +42,7 @@ class _SearchPageState extends State<SearchPage> {
       controller: searchController,
       onChanged: runFilter,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.search),
+        prefixIcon: const Icon(Icons.search),
         hintText: "Search Clubs...",
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(25),
