@@ -1,5 +1,3 @@
-
-
 import '../Models/event.dart';
 
 List<Event> allEvents = [
